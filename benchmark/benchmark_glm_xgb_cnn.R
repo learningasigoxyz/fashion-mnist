@@ -297,7 +297,7 @@ for (ep in seq_len(epochs)) {
     bi  <- perm[i:min(i + batch_size - 1L, n_train)]
     nb  <- length(bi)
     # xb: (N,1,28,28) NCHW flat vector.  C=1 so layout is just row-major images.
-    xb  <- as.double(X_train[bi, ])   # (nb, 784) row-major → same as NCHW with C=1
+    xb  <- as.double(t(X_train[bi, ]))  # transpose → row-major NCHW flat with C=1
 
     yb   <- y_train[bi]
     y_oh <- matrix(0.0, nb, 10L)
@@ -358,7 +358,7 @@ eval_bs <- 256L
 for (i in seq(1L, nrow(X_test), by = eval_bs)) {
   bi  <- i:min(i + eval_bs - 1L, nrow(X_test))
   nb  <- length(bi)
-  xb  <- as.double(X_test[bi, ])
+  xb  <- as.double(t(X_test[bi, ]))
 
   c1  <- conv_fwd(xb, nb, 1L, 28L, 28L, W_c1, b_c1, kH, kW)
   p1  <- maxpool_fwd_cpp(relu(c1$out), nb, F1, 28L, 28L, 2L, 2L)
