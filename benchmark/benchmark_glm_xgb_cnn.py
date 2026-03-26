@@ -36,7 +36,7 @@ def benchmark_glm(X_train, y_train, X_test, y_test):
     X_tr = scaler.fit_transform(X_train.astype(np.float32))
     X_te = scaler.transform(X_test.astype(np.float32))
 
-    clf = LogisticRegression(max_iter=1000, solver="lbfgs", C=1.0, n_jobs=-1)
+    clf = LogisticRegression(max_iter=5000, solver="lbfgs", C=1.0)
 
     t0 = time.time()
     clf.fit(X_tr, y_train)
